@@ -1,5 +1,7 @@
 package buscapetService;
 
+import java.util.ArrayList;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,19 @@ public class PetshopController {
 	@RequestMapping("/ola/{nome}")
     public String darOi(@PathVariable(value="nome") String nome) {
         return "OI, "+ nome;
+    }
+	
+	@RequestMapping("/todos/{nome}")
+	public ArrayList<Petshop> buscaTodos(@PathVariable(value="nome") String nome) {
+        
+		int i=0;
+        ArrayList<Petshop> petshops = new ArrayList<Petshop>();
+        
+		for(i = 1; i <= 10; i++){
+			petshops.add(new Petshop(i, nome+":"+i));
+        }
+		
+		return petshops;
     }
 	
 	
