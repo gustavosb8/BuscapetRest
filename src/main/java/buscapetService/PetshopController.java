@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dao.DAOPetshop;
 import model.Petshop;
 
 @RestController
 public class PetshopController {
 	
-	String nome = "MeuPetShop";
+	//private String nome = "MeuPetShop";
+	private DAOPetshop dao = new DAOPetshop();
 
 	@RequestMapping("/hello/{nome}")
     public Petshop getPetshop(@PathVariable(value="nome") String nome) {
@@ -24,17 +26,14 @@ public class PetshopController {
         return "OI, "+ nome;
     }
 	
-	@RequestMapping("/todos/{nome}")
-	public ArrayList<Petshop> buscaTodos(@PathVariable(value="nome") String nome) {
-        
-		int i=0;
-        ArrayList<Petshop> petshops = new ArrayList<Petshop>();
-        
-		for(i = 1; i <= 10; i++){
-			petshops.add(new Petshop(i, nome+":"+i));
-        }
-		
-		return petshops;
+	@RequestMapping("/todos/")
+	public ArrayList<Petshop> buscaTodos() {
+		try {
+			return dao.buscaTodosPetshops();
+		}catch(Exception ex) {
+			System.out.println("Erro: "+ex.getMessage());
+			return new ArrayList<Petshop>();
+		}
     }
 	
 	
